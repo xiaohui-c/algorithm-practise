@@ -679,3 +679,117 @@ function moveZero(arr:number[]):void{
 
 
 
+
+
+
+
+##### 获取字符串中连续最多的字符以及次数
+
+如输入‘abbcccddeeee1234’，计算得到连续最多的字符是‘e’,4次
+
+```tsx
+interface IRes{
+   str:String,
+   length:Number
+}
+
+function findContinuousChar(str:string):IRes{
+    const res = {
+        str:'',
+        length:0
+    }
+    if(!str)  return
+    const length = str.length
+    if(length === 0) return res
+    
+    let tempLength = 0
+    for(let i = 0; i < length; i++){//O(n)
+        tempLength = 0
+        for(let j = i; j < length; j++;){
+            if(str[i] === str[j]){
+                tempLength ++
+            }
+            if(str[i] !== str[j] || j === length - 1){
+                //两个比较的值不相等或者已经遍历到最后一位
+              if(tempLength > res.length)  {//在这里进行赋值
+                  res.length = tempLength
+                  res.str = str[i]
+              }
+              if(i < length - 1){//跳步
+                  i = j - 1
+              }
+            }
+        }
+    }
+    return res
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### 为何0.1 + 0.2 ！== 0.3
+
+==计算机使用**二进制**存储数据==，整数转换为二进制没有误差，如9转换为二进制是1001，而==小数可能无法用二进制准确表达==，如0.2转换为1.1001100
+
+不光JS，其他编程语言也都一样
+
+
+
+
+
+
+
+##### 请说明Ajax Fetch Axios三者的区别
+
+三者都用于网络请求，但是不同维度
+
+Ajax是一种技术统称，Fetch是一个具体API，Axios是第三方库
+
+```js
+function ajax(url){
+    let xhr = new XMLHttpRequest()
+    xhr.open('GET',url,false)
+    xhr.onreadystatechange = () =>{
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+                console.log(xhr.responseText)
+            }
+        }
+    }
+    xhr.send()
+}
+```
+
+
+
+```js
+function ajax(url){
+	fetch(url)	.then(res => res.json())
+}
+```
+
+
+
+
+
+##### 防抖和节流有什么区别，分别用于什么场景
+
+区别
+
+
+
+
+
+由相互关联的原型组成的链状结构就是原型链
