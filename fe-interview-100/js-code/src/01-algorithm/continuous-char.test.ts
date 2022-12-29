@@ -1,4 +1,4 @@
-import { findContinuousChar1 } from "./continuous-char"
+import { findContinuousChar1 , findContinuousChar2} from "./continuous-char"
 
 describe( "连续字符和长度", () => {
     it( "正常情况", () => {

@@ -3,4 +3,4 @@
  * @author 双越老师
  */
 
-import './01-algorithm/continuous-char'
+import './01-algorithm/quick-sort'

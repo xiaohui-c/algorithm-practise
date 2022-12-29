@@ -687,6 +687,8 @@ function moveZero(arr:number[]):void{
 
 如输入‘abbcccddeeee1234’，计算得到连续最多的字符是‘e’,4次
 
+嵌套循环(时间复杂度O(n))
+
 ```tsx
 interface IRes{
    str:String,
@@ -725,13 +727,110 @@ function findContinuousChar(str:string):IRes{
 }
 ```
 
+双指针==只要是有用到嵌套循环的都可以使用双指针代替==
+
+```tsx
+interface IRes{
+  char:string,
+  length:number
+}
+
+function findContinuousChar(str:string):IRes{
+  const res = {
+    char:'',
+    length:0
+  }
+  
+  if(!str) return res
+  const length = str.length
+  
+  let tempLength = 0
+  let i = 0
+  let j = 0
+  
+  for(;i < length; i++){
+    if(str[i] === str[j]){
+      tempLength ++
+    }
+    
+    //如果不相等，或者i已经到了字符串最后一位
+    if(str[i] !== str[j] || i === length - 1){
+      if(tempLength > res.length){
+        res.char = str[j]
+        res.length = tempLength
+      }
+      
+      tempLength = 0
+      
+      if(i < length - 1){
+        j = i
+        i--
+      }
+    }
+  }
+  
+  return res
+}
+```
 
 
 
 
 
+##### 快速排序
 
+```ts
+function quickSort1(arr:number[]):number[]{
+  const length = arr?.length
+  if(!length) return arr
+  
+  const midIndex:number = Math.floor(length / 2)
+  //splice第一个参数表示目标元素下标，第二个参数表示从目标元素开始删除几个元素，第三个参数表示从目标元素开始插入元素
+  //splice改变原数组
+  const midValue:number = arr.splice(midIndex,1)[0]
+  
+  const left:number[] = []
+  const right:number[] = []
+  
+  for(let i = 0; i < arr.length; i++){
+    const n = arr[i]
+    if(n < midValue){
+      left.push(n)
+    }else{
+      right.push(n)
+    }
+  }
+  
+  return quickSort1(left).concat([midValue],quickSort1(right))
+}
 
+function quickSort2(arr:number[]):number[]{
+  const length = arr?.length
+  if(!length) return arr
+  
+  const midIndex = Math.floor(length / 2)
+  const midValue = arr.slice(midIndex,1)[0] 
+  
+  const left:number[] = []
+  const right:number[] = []
+  
+  for(let i = 0; i < length; i++){
+    if(i !== midIndex){
+      const n = arr[i]
+      if(n < midValue){
+        left.push(n)
+      }else{
+        right.push(n)
+      }
+    }
+    return quickSort2(left).concat([midValue],quickSort2(right))
+  }
+}
+```
+
+快速排序有遍历有二分，时间复杂度为O(nlogn)
+
+常规排序，嵌套循环时间复杂度为O(n^2)
 
 
 
